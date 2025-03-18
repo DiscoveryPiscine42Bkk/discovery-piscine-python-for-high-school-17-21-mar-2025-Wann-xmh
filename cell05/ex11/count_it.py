@@ -8,4 +8,4 @@ for i in range(1,x):
     print(f"{sys.argv[i]} : {len(sys.argv[i])}")
 
     #   print(sys.argv[i],end=' ')
-    #   print(len(sys.argv[i]))
+    print(len(sys.argv[i]))

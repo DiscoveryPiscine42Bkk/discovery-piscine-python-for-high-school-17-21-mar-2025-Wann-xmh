@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-password = "1234"
+password = "Python is awesome"
 check = (input("Password : "))
 if check == "1234" :
     print("ACCESS GRANTED.")

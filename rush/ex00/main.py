@@ -3,10 +3,9 @@ from checkmate import checkmate
 
 def main():
     board = """\
-...Q
-..K.
-..P.
-....\
+B..........
+...
+..K\
 """
     board = board.splitlines()
     for row in board:

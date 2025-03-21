@@ -13,7 +13,7 @@ def check_square(board: list[str]) -> None:
     for line in board:
         if (len(line) != height):
             print("The board is not square")
-            exit(1)
+            exit()
         
     print("The board is square")
 
@@ -44,16 +44,16 @@ def checkmate(board):
 
     # เช็คแกนy=ค่าคงที่
     for i in range(1, len(board[0])):  # ตรวจสอบแนวนอน (ขวา)
-        if(Kx + i) < len(board[0]):  # ป้องกัน index out of range
-            cell = board[Ky][Kx + i]
+        if(Kx - i) < len(board[0]):  # ป้องกัน index out of range
+            cell = board[Ky][Kx - i]
             if cell in ('P', 'B', '.'):
                 True #fail
             else:
                 success_or_fail.append("Success")
                 break 
     for i in range(1, len(board[0])):  # ตรวจสอบนอน (ซ้าย)
-        if Kx - i >= 0:
-                cell = board[Ky][Kx - i]
+        if Kx + i >= 0:
+                cell = board[Ky][Kx + i]
                 if cell in ('P', 'B', '.'):
                     True
                 else:
@@ -63,7 +63,7 @@ def checkmate(board):
         
     # เช็คแกนx=ค่าคงที่
     #ขึ้น
-    for i in range(1, len(board[0])):  # ตรวจสอบแนวนอน (ขวา)
+    for i in range(1, len(board[0])):  # ตรวจสอบแนวตั้ง
         if Ky - i >= -1:  # ป้องกัน index out of range
             cell = board[Ky-i][Kx]
             if cell in ('P', 'B', '.'):
@@ -72,7 +72,7 @@ def checkmate(board):
                 success_or_fail.append("Success")
                 break 
     #ลง
-    for i in range(1, len(board[0])):  # ตรวจสอบแนวนอน (ขวา)
+    for i in range(1, len(board[0])):  # ตรวจสอบแนวตั้ง
         if Ky + i < len(board):  # ป้องกัน index out of range
             cell = board[Ky+i][Kx]
             if cell in ('P', 'B', '.'):
@@ -85,42 +85,42 @@ def checkmate(board):
     #ตรวจเส้นแนวแทยงด้วยความชัน=1
     #Q1
     for i in range(1, len(board)):  
-        if (Ky + i < len(board)) and (Kx - i >= 0 ):  # ป้องกัน IndexError
-            cell = board[Ky + i][Kx - i]
+        if (Ky - i >=0) and (Kx - i >= 0 ):  # ป้องกัน IndexError
+            cell = board[Ky - i][Kx - i]
             if cell in ('P', 'R', '.'):  # ถ้าเจอ P, R, หรือ . ให้ล้มเหลว
-                #faile
-                #Q2
-                for i in range(1, len(board)):  
-                   if ((Ky - i >= 0)) and (Kx - i >= 0 ):  # ป้องกัน IndexError
-                        cell = board[Ky - i][Kx - i]
-                        if cell in ('P', 'R', '.'):  # ถ้าเจอ P, R, หรือ . ให้ล้มเหลว
-                           True #faile
-                           #Q3
-                           for i in range(1, len(board)):
-                               if ((Ky - i >= 0)) and (Kx + i <= len(board)):  # ป้องกัน IndexError
-                                    cell = board[Ky - i][Kx + i]
-                                    if cell in ('P', 'R', '.'):  # ถ้าเจอ P, R, หรือ . ให้ล้มเหลว
-                                        True #faile
-                                        #Q4
-                                        for i in range(1, len(board)): 
-                                            if ((Ky + i <= len(board))) and (Ky + i <= len(board)):  # ป้องกัน IndexError
-                                                cell = board[Ky + i][Kx + i]
-                                                if cell in ('P', 'R', '.'):  # ถ้าเจอ P, R, หรือ . ให้ล้มเหลว
-                                                    True #faile
-                                                    success_or_fail.append("Fail")
-                                                    break
-                                                else:
-                                                    success_or_fail.append("Success")
-                                                    break
-                                    else:
-                                        success_or_fail.append("Success")
-                                        break
-                        else:
-                           success_or_fail.append("Success")
-                           break
+                True#faile
             else:
                 success_or_fail.append("Success")
                 break
+    #Q2
+    for i in range(1, len(board)):  
+        if ((Ky - i >= 0)) and (Kx + i < len(board) ):  # ป้องกัน IndexError
+            cell = board[Ky - i][Kx + i]
+            if cell in ('P', 'R', '.'):  # ถ้าเจอ P, R, หรือ . ให้ล้มเหลว
+                True #faile
+            else:
+                success_or_fail.append("Success")
+                break
+     #Q3
+    for i in range(1, len(board)):
+        if ((Ky - i >= 0)) and (Kx + i < len(board)):  # ป้องกัน IndexError
+            cell = board[Ky - i][Kx + i]
+            if cell in ('P', 'R', '.'):  # ถ้าเจอ P, R, หรือ . ให้ล้มเหลว
+                True #faile
+            else:
+                success_or_fail.append("Success")
+                break
+                                        
+    #Q4
+    for i in range(1, len(board)): 
+        if ((Ky + i < len(board))) and (Kx + i < len(board)):  # ป้องกัน IndexError
+            cell = board[Ky + i][Kx + i]
+            if cell in ('P', 'R', '.'):  # ถ้าเจอ P, R, หรือ . ให้ล้มเหลว
+                    True #faile
+            else :
+               success_or_fail.append("Fail")
+               break     
+
         for i in range(len(success_or_fail)):
             if success_or_fail[i] == 'Success':
               S_list.append(success_or_fail[i])

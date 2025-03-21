@@ -6,13 +6,16 @@ def check_num_K(board):
         print("Error!!")
     else :
         return True
-def check_square(board):
-    row_length = len(board[0])  # Get the length of the first row
-    if all(len(row) == row_length for row in board):
-        True
-        # print("The board is a square.")
-    else:
-        print("The board is not a square.")
+def check_square(board: list[str]) -> None:
+
+    height = len(board)
+
+    for line in board:
+        if (len(line) != height):
+            print("The board is not square")
+            exit(1)
+        
+    print("The board is square")
 
 def checkmate(board):
     check_num_K(board)
@@ -28,16 +31,16 @@ def checkmate(board):
                 Kx = j
                 break
     # #เช็ค Pawn        
-    for i in range(0,1):
-        cell = board[Ky+1][Kx + 1]
-        cell1 = board[Ky+1][Kx + 1]
+    if Ky + 1 < len(board) and Kx + 1 < len(board[0]):
+        cell = board[Ky + 1][Kx + 1]
+        cell1 = board[Ky + 1][Kx - 1]
         if cell in ('P'):
            success_or_fail.append("Success")
         if cell1 in ('P'):
            success_or_fail.append("Success")
         else:
             success_or_fail.append("Fail")
-            break
+            
 
     # เช็คแกนy=ค่าคงที่
     for i in range(1, len(board[0])):  # ตรวจสอบแนวนอน (ขวา)
@@ -82,7 +85,7 @@ def checkmate(board):
     #ตรวจเส้นแนวแทยงด้วยความชัน=1
     #Q1
     for i in range(1, len(board)):  
-        if (Ky + i <= len(board)) and (Kx - i >= 0 ):  # ป้องกัน IndexError
+        if (Ky + i < len(board)) and (Kx - i >= 0 ):  # ป้องกัน IndexError
             cell = board[Ky + i][Kx - i]
             if cell in ('P', 'R', '.'):  # ถ้าเจอ P, R, หรือ . ให้ล้มเหลว
                 #faile
